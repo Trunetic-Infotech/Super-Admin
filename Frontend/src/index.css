@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.circle7 {
+    border-radius: 100% 0% 25% 25% / 91% 99% 1% 0%;
+    background-color: #4D44B5;
+  
+    bottom: 22px;
+    right: 0;
+  }
+  .circle8 {
+    border-radius: 100% 0% 25% 25% / 91% 99% 1% 0%;
+    background-color: white;
+  
+    bottom: 22px;
+    right: 0;
+  }
+  .circle9 {
+    border-radius: 100% 0% 25% 25% / 91% 99% 1% 0%;
+    background-color: #4D44B5;
+  
+    bottom: -22px;
+    right: 0px;
+  }
+
+  
+  .border-shadow {
+    box-shadow:  
+      -6px 10px 15px rgba(77, 68, 181, 0.4),  /* Left shadow */
+       6px 10px 15px rgb(252, 252, 253),   /* Right shadow */
+       0px 12px 18px rgba(77, 68, 181, 0.4);   /* Bottom shadow */
+  }
+    
+  .text1-shadow {
+    box-shadow:  
+      -6px 10px 15px rgba(77, 68, 181, 0.4),  /* Left shadow */
+       6px 10px 15px rgb(252, 252, 253),   /* Right shadow */
+       0px 12px 18px rgba(77, 68, 181, 0.4);   /* Bottom shadow */
+  }
