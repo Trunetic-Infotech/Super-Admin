@@ -11,7 +11,7 @@ const Pagination = ({ totalPosts, postsPerPage, paginate, nextPage, prevPage, cu
   return (
     <div className="pagination flex justify-center items-center space-x-2 mt-8 p-3 w-full">
       {/* Previous Button */}
-      <button
+      <button                                  
         onClick={prevPage}
         className={`px-2 py-2 rounded-xl border transition-all text-sm md:text-base 
                   ${currentPage === 1 
@@ -31,7 +31,7 @@ const Pagination = ({ totalPosts, postsPerPage, paginate, nextPage, prevPage, cu
             className={`px-2 py-2 rounded-full transition-all border text-sm md:text-base 
                       ${currentPage === number
                         ? "bg-[#4D44B5] text-white border-[#4D44B5]"
-                        : "bg-white text-gray-700 border-gray-300 hover:bg-[#4D44B5] hover:text-[#4D44B5]"}`}
+                        : "bg-white text-gray-700 border-gray-300 hover:bg-[#4D44B5] hover:text-white"}`}
           >
             {number}
           </button>

@@ -5,10 +5,11 @@ import { ChevronDown } from "lucide-react";
 import { MoreVertical, MessageCircle } from "lucide-react";
 import Pagination from "./Pagination";
 
-const TotalSchoolAdmins = ({setSelectedComponent}) => {
+const TotalSchoolAdmins = ({ setSelectedComponent }) => {
   const [open, setOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(12);
+  const [checked, setChecked] = useState(false);
 
   const admins = [
     { name: "Queens School Admin", id: "REG20250412" },
@@ -66,18 +67,18 @@ const TotalSchoolAdmins = ({setSelectedComponent}) => {
   };
   return (
     <div>
-      <div className="w-full h-screen bg-gray-200 p-4 ">
-        <div className="flex justify-between ">
-          <h1 className="text-xl text-[#4D44B5] font-bold">
+      <div className="w-full     h-screen bg-gradient-to-br from-white via-[#4D44B5] to-[#4D44B5] p-4">
+        <div className="flex justify-between">
+          <h1 className="lg:text-xl text-[#4D44B5] font-bold lg:ml-0 ml-10">
             Total School Admins
           </h1>
-          <div className="flex justify-end items-center   ">
-            <h1 className="font-bold text-[#4D44B5]  ">SUPER ADMIN</h1>
+          <div className="flex justify-end items-center">
+            <h1 className="font-bold text-[#4D44B5]">SUPER ADMIN</h1>
             <UserCircle className="w-7 h-7" />
           </div>
         </div>
 
-        <div className="flex  mt-10 ">
+        <div className="grid lg:grid-cols-3   mt-10">
           {/* Search */}
           <div className="flex items-center bg-white px-3 py-3 rounded-full border-2 border-white shadow-sm w-full max-w-xs">
             <FaSearch className="text-[#4D44B5] mr-3 w-4 h-4" />
@@ -88,10 +89,10 @@ const TotalSchoolAdmins = ({setSelectedComponent}) => {
             />
           </div>
 
-          <div className=" flex relative ml-auto mr-10 gap-4">
+          <div className="flex  relative ml-auto mr-10 gap-4 mt-2">
             <button
               onClick={() => setOpen(!open)}
-              className="relative flex items-center justify-between gap-2 px-4 py-2 bg-white rounded-full border border-gray-300 text-[#4D44B5] text-sm shadow-md hover:shadow-lg transition-all"
+              className="relative flex items-center justify-between gap-2 px-6 py-2 bg-white rounded-full border lg:text-lg border-gray-300 text-[#4D44B5] text-xs shadow-md hover:shadow-lg transition-all"
             >
               SUPER ADMIN
               <ChevronDown className="w-4 h-4" />
@@ -111,24 +112,27 @@ const TotalSchoolAdmins = ({setSelectedComponent}) => {
               </ul>
             )}
 
-            <button className="flex items-center gap-2 px-6 py-2 bg-[#4D44B5] rounded-full border text-white text-sm shadow-sm">
-              
-             SUPER ADMIN
+            <button className="flex items-center gap-2 px-6 py-2 bg-[#4D44B5] rounded-full border text-white lg:text-lg text-xs shadow-sm">
+              SUPER ADMIN
             </button>
           </div>
         </div>
-        <div className="bg-white h-[90vh] mt-10 rounded-xl  ">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 p-8">
+
+        <div className=" h-[90vh] mt-10 rounded-xl  ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 p-8 ">
             {currentPosts.map((admin, index) => (
               <div
                 key={index}
-                className="bg-[#4D44B5] rounded-lg p-5 flex flex-col items-center text-center shadow-xl hover:shadow-lg transition-shadow duration-300 relative"
+                className="bg-  rounded-lg p-4 flex flex-col items-center text-center shadow-xl hover:shadow-lg transition-shadow duration-300 relative border-shadow"
               >
                 {/* Three dot icon */}
                 <div className="absolute top-3 right-3 cursor-pointer">
-                  <MoreVertical onClick={()=>setSelectedComponent("Admins Profile")} className="w-6 h-6 text-white" />
+                  <MoreVertical
+                    onClick={() => setSelectedComponent("Admins Profile")}
+                    className="w-6 h-6 text-white"
+                  />
                 </div>
-    
+
                 {/* Profile image */}
                 <div className="w-20 h-20 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4">
                   <span className="text-xl font-bold">Admin</span>
@@ -141,20 +145,39 @@ const TotalSchoolAdmins = ({setSelectedComponent}) => {
                 <p className="text-base text-white mb-4">{admin.id}</p>
 
                 {/* Toggle & message */}
-                <div className="flex items-center gap-10">
+                {/* Toggle & message */}
+                <div className="flex items-center gap-4 justify-center mt-4">
+                  {/* The Toggle */}
                   <div
                     onClick={() => handleToggle(index)}
-                    className={`w-10 h-5 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ${
-                      toggles[index] ? "bg-green-500" : "bg-gray-300"
-                    }`}
+                    className={`w-16 h-8 flex items-center justify-start p-1 cursor-pointer rounded-md transition-all duration-300 ease-in-out ${
+                      toggles[index]
+                        ? "bg-gradient-to-r from-[#FF416C] to-[#FF4B2B]"
+                        : "bg-gradient-to-r from-[#00C9FF] to-[#92FE9D]"
+                    } 
+    shadow-lg hover:scale-105 transform relative`}
                   >
+                    {/* Toggle Text */}
+                    <span
+                      className={`absolute text-xs font-semibold text-white transition-all duration-300 ${
+                        toggles[index]
+                          ? "left-1/3 transform -translate-x-1/2"
+                          : "right-1/3 transform translate-x-1/2"
+                      }`}
+                    >
+                      {toggles[index] ? "OFF" : "ON"}
+                    </span>
+
                     <div
-                      className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${
-                        toggles[index] ? "translate-x-5" : "translate-x-0"
+                      className={`bg-white w-6 h-6 rounded-md shadow-2xl transform transition-transform duration-1000 ease-in-out ${
+                        toggles[index]
+                          ? "translate-x-8 scale-110 rotate-[360deg]"
+                          : "translate-x-0 scale-100 rotate-0"
                       }`}
                     />
                   </div>
 
+                  {/* Message Icon */}
                   <div className="cursor-pointer">
                     <MessageCircle className="w-5 h-5 text-white" />
                   </div>
@@ -163,16 +186,19 @@ const TotalSchoolAdmins = ({setSelectedComponent}) => {
             ))}
           </div>
         </div>
+
+        {/* Pagination Component (Make sure it's below the grid) */}
+        <div className="">
+          <Pagination
+            totalPosts={admins.length}
+            postsPerPage={postsPerPage}
+            paginate={paginate}
+            nextPage={nextPage}
+            prevPage={prevPage}
+            currentPage={currentPage}
+          />
+        </div>
       </div>
-        {/* Pagination Component */}
-        <Pagination
-          totalPosts={admins.length}
-          postsPerPage={postsPerPage}
-          paginate={paginate}
-          nextPage={nextPage}
-          prevPage={prevPage}
-          currentPage={currentPage}
-        />
     </div>
   );
 };
