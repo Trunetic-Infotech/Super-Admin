@@ -1,7 +1,34 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
 
 
-const AdminsProfiles = () => {
+const AdminsProfiles = ({adminProfileID, adminTotalUsers, adminTotalStudents}) => {
+  const [adminData, setAdminData] = useState([]);
+  const fetchAdminData = async()=>{
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_URL}/admin/profile/${adminProfileID}`)
+
+      console.log(response);
+      if(response.data && response.data.user){
+        setAdminData(response.data.user);
+      }else{
+        toast.error(response.data.message);
+      }
+      
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Something went wrong!");
+
+      
+    }
+  }
+
+  useEffect(()=>{
+    if(adminProfileID){
+      fetchAdminData();
+    }
+  },[])
   return (
     <div className='flex  items-center justify-center border-shadow h-full bg-gradient-to-br from-white via-[#4D44B5] to-white '>
         
@@ -9,7 +36,7 @@ const AdminsProfiles = () => {
         {/* Header */}
         <div className="text-center mb-6">
           <p className="text-[#4D44B5]  text-md lg:text-3xl font-bold text-shadow">
-            Queens School Admin
+            {adminData ? adminData.name : "Loading..."}
           </p>
         </div>
     
@@ -30,14 +57,20 @@ const AdminsProfiles = () => {
           {/* Super Admin          Details */}
           <div className="grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 lg:gap-4 md:gap-3 gap-3 items-center text-center ">
             {[
-              { label: "school_id", value: "1234" },
-              { label: "Contact No", value: "+91 XXXXXXXXXX" },
-              { label: "Register_no", value: "20000" },
-              { label: "Email ID", value: "xyz@gmail.com" },
-              { label: "Total_student", value: "500" },
-              { label: "Totol_user", value: "1000" },
-              { label: "School Join ?", value: "12-march-2025" },
-              { label: "Address", value: "Thane, Mumbra" },
+              { label: "school_id", value: adminData ?  adminData.id : "Loading..." },
+              { label: "Contact No", value: adminData ?  adminData.phone_number : "Loading..." },
+              { label: "Register_no", value: adminData ?  adminData.organization_Registration_Number : "Loading..." },
+              { label: "Email ID", value: adminData ?  adminData.email : "Loading..." },
+              { label: "Total_student", value: adminData ?  adminTotalStudents : "Loading..." },
+              { label: "Totol_user", value: adminData ?  adminTotalUsers : "Loading..." },
+              { 
+                label: "School Join ?", 
+                value: adminData 
+                  ? new Date(adminData.created_at).toLocaleDateString('en-GB') 
+                  : "Loading..." 
+              },
+              
+              { label: "Address", value: adminData ?  adminData.address : "Loading..." },
               
           
  

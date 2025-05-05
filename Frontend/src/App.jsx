@@ -1,6 +1,10 @@
 import React from "react";
 
 import { Route, Routes } from "react-router-dom";
+// import { ToastContainer } from 'react-toastify'; // Correct import for Toaster
+import { Toaster } from 'react-hot-toast'; // Correct import for Toaster
+
+
 
 
 
@@ -23,6 +27,9 @@ const App = () => {
         {/* <Route path="/login" element={<Login/>}></Route> */}
         <Route path="*" element={<PageNotFound />}></Route>
       </Routes>
+      {/* <ToastContainer /> ToastContainer for notifications */}
+      <Toaster /> {/* ToastContainer for notifications */}
+
     </div>
   );
 };

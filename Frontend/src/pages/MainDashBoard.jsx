@@ -6,7 +6,8 @@ import TotalSchoolAdmins from "../component/TotalSchoolAdmins";
 import AdminsProfiles from "../component/AdminsProfiles";
 import ServiceComplaint from "../component/ServiceComplaint";
 import Login from "./Login";
-
+import axios from 'axios';
+// import 
 
 // Import your right-side components here
 // import HomeComponent from "../components/Dashboard/Home";
@@ -15,20 +16,50 @@ import Login from "./Login";
 // import ComplaintCompany from "../components/Dashboard/ComplaintCompany";
 
 const MainDashBoard = () => {
+  const [data, setData] = useState([]);
+
   const [isSidebarOpen,setIsSidebarOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState("");
   const [selectedComponent, setSelectedComponent] = useState("Home");
 
+  const [adminProfileID, setAdminProfileID] = useState([]);
+  const [adminTotalStudents, setAdminTotalStudents] = useState(null);
+  const [adminTotalUsers, setAdminTotalUsers] = useState(null);
+
   const componentMap = {
     Home: <Home2 setSelectedComponent={setSelectedComponent} isSidebarOpen={isSidebarOpen}
-    setIsSidebarOpen={setIsSidebarOpen} />,
-    "Total School Admins": <TotalSchoolAdmins   setSelectedComponent={setSelectedComponent}   />,
-    "Admins Profile":<AdminsProfiles setSelectedComponent={setSelectedComponent}/>,
+    setIsSidebarOpen={setIsSidebarOpen} data={data} setAdminProfileID={setAdminProfileID}  setAdminTotalStudents={setAdminTotalStudents} setAdminTotalUsers={setAdminTotalUsers}/>,
+    "Total School Admins": <TotalSchoolAdmins   setSelectedComponent={setSelectedComponent} setAdminProfileID={setAdminProfileID} setAdminTotalStudents={setAdminTotalStudents} setAdminTotalUsers={setAdminTotalUsers}  />,
+    "Admins Profile":<AdminsProfiles setSelectedComponent={setSelectedComponent} adminProfileID={adminProfileID} adminTotalStudents={adminTotalStudents} adminTotalUsers={adminTotalUsers}/>,
     "Service Complaint": <ServiceComplaint setSelectedComponent={setSelectedComponent} />,
    
     // "Complaint Company": <ComplaintCompany />,
   };
 
+  // const [totalAdmins, setTotalAdmins] = useState(null);
+  // const [totalUsers, setTotalUsers] = useState(null);
+  // const [totalStudents, setTotalStudents] = useState(null);
+
+
+  const getAdminDetails =async()=>{
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_URL}/super-admin/get-counts`)
+
+      console.log(response);
+
+      if(response.data && response.data.data){
+        setData(response.data.data)
+      }
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
+  useEffect(()=>{
+    getAdminDetails();
+  },[])
   
 
 

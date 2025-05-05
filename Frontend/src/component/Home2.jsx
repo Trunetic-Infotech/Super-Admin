@@ -1,18 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MoreHorizontal, MoreVertical, UserCircle } from "lucide-react";
 import us from "../assets/user.svg";
 import us1 from "../assets/User (2).svg";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-const Home2 = ({ setSelectedComponent, isSidebarOpen, setIsSidebarOpen }) => {
-  const adminData = [
-    { id: "123456", students: 100, users: 600 },
-    { id: "123457", students: 120, users: 620 },
-    { id: "123458", students: 130, users: 630 },
-    { id: "123459", students: 140, users: 640 },
-    { id: "123460", students: 150, users: 650 },
-    { id: "123461", students: 160, users: 660 },
-  ];
+const Home2 = ({ setSelectedComponent, isSidebarOpen, setIsSidebarOpen , data, setAdminProfileID,setAdminTotalStudents, setAdminTotalUsers}) => {
+  console.log(data);
+  
+  // const adminData = [
+  //   { id: "123456", students: 100, users: 600 },
+  //   { id: "123457", students: 120, users: 620 },
+  //   { id: "123458", students: 130, users: 630 },
+  //   { id: "123459", students: 140, users: 640 },
+  //   { id: "123460", students: 150, users: 650 },
+  //   { id: "123461", students: 160, users: 660 },
+  // ];
+
+  const [adminData, setAdminData] = useState([]);
+
+  const getAdminData = async()=>{
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_URL}/super-admin/get-admin-data`)
+
+      console.log(response);
+
+      if(response.data && response.data.data){
+        setAdminData(response.data.data)
+      }
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+}
+
+useEffect(()=>{
+  getAdminData();
+},[])
 
   const [checked, setChecked] = useState(false);
   return (
@@ -37,7 +62,7 @@ const Home2 = ({ setSelectedComponent, isSidebarOpen, setIsSidebarOpen }) => {
                 <h2 className="text-gray-400 font-semibold text-lg">
                   Total School Admins
                 </h2>
-                <p className="text-xl font-bold text-gray-800">50</p>
+                <p className="text-xl font-bold text-gray-800">{data.totalAdmins}</p>
               </div>
             </div>
 
@@ -48,7 +73,7 @@ const Home2 = ({ setSelectedComponent, isSidebarOpen, setIsSidebarOpen }) => {
                 <h2 className="text-gray-400 font-semibold text-lg">
                   Total Users
                 </h2>
-                <p className="text-xl font-bold text-gray-800">20,000</p>
+                <p className="text-xl font-bold text-gray-800">{data.totalUsers}</p>
               </div>
             </div>
 
@@ -59,7 +84,7 @@ const Home2 = ({ setSelectedComponent, isSidebarOpen, setIsSidebarOpen }) => {
                 <h2 className="text-gray-400 font-semibold text-lg">
                   Total Students
                 </h2>
-                <p className="text-xl font-bold text-gray-800">10,000</p>
+                <p className="text-xl font-bold text-gray-800">{data.totalStudents}</p>
               </div>
             </div>
           </div>
@@ -83,16 +108,16 @@ const Home2 = ({ setSelectedComponent, isSidebarOpen, setIsSidebarOpen }) => {
                         <img src={us1} className="w-7 h-7" />
                         <div>
                           <h1 className="text-md font-semibold">
-                            QUEEN SCHOOL ADMINS
+                            {item.admin_name}
                           </h1>
                           <span className="text-sm text-[#4D44B5]">
-                            ID {item.id}
+                            ID {item.admin_id}
                           </span>
                         </div>
                       </div>
                       <div className="  top-3 right-3 cursor-pointer">
                         <MoreHorizontal
-                          onClick={() => setSelectedComponent("Admins Profile")}
+                          onClick={() =>{ setSelectedComponent("Admins Profile"); setAdminProfileID(item.admin_id); setAdminTotalStudents(item.totalStudents); setAdminTotalUsers(item.totalUsers.totalUsers)}}
                           className="w-6 h-6 text-black"
                         />
                       </div>
@@ -100,15 +125,15 @@ const Home2 = ({ setSelectedComponent, isSidebarOpen, setIsSidebarOpen }) => {
 
                     <div className="ml-2 space-y-2">
                       <div className="flex justify-between">
-                        <h1 className="text-gray-600">Queen Total Students</h1>
+                        <h1 className="text-gray-600">Total Students</h1>
                         <span className="text-[#4D44B5] font-medium">
-                          {item.students}
+                          {item.totalStudents }
                         </span>
                       </div>
                       <div className="flex justify-between">
                         <h1 className="text-gray-600">Total Users</h1>
                         <span className="text-[#4D44B5] font-medium">
-                          {item.users}
+                          {item.totalUsers.totalUsers}
                         </span>
                       </div>
                     </div>
