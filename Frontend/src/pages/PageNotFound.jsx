@@ -32,7 +32,7 @@ const PageNotFound = () => {
 
         <div className="mt-8 flex justify-center gap-4">
           <Link
-            to="/main-dashboard"
+            to="/"
             aria-label="Go to home page"
             className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-md hover:bg-indigo-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600 transition"
           >
